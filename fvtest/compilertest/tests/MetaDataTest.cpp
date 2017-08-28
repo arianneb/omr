@@ -148,9 +148,9 @@ TEST_F(MetaDataTest, NonExactLookup) {
    manager.insertMetaData(&default_data);
 
    std::vector<int> test_points = {default_startPC, default_startPC + 1, default_endPC -1, };
-   for (auto i : test_points) {
-      auto* metadata = manager.findMetaDataForPC(i);
-      ASSERT_TRUE(NULL != metadata) << "Didn't find pc" << i;
+   for (auto i = test_points.begin(); i != test_points.end(); ++i) {
+      auto* metadata = manager.findMetaDataForPC(*i);
+      ASSERT_TRUE(NULL != metadata) << "Didn't find pc" << *i;
       ASSERT_TRUE(NULL !=  metadata->name);
       ASSERT_STREQ(default_data.name, metadata->name);
    }
@@ -185,13 +185,13 @@ TEST_F(MetaDataTest, MultipleCaches) {
    std::vector<int> test_points = {50, 3000, 45005};
    std::vector<const char*> names = {default_data_name, "second", "third"};
    int iter = 0;
-   for (auto i : test_points) {
-      auto* metadata = manager.findMetaDataForPC(i);
-      ASSERT_TRUE(NULL != metadata) << "Didn't find pc" << i;
+   for (auto i = test_points.begin(); i != test_points.end(); ++i) {
+      auto* metadata = manager.findMetaDataForPC(*i);
+      ASSERT_TRUE(NULL != metadata) << "Didn't find pc" << *i;
       ASSERT_TRUE(NULL !=  metadata->name);
       ASSERT_STREQ(names[iter++], metadata->name);
       ASSERT_TRUE(manager.removeMetaData(metadata));
-      ASSERT_TRUE(NULL == manager.findMetaDataForPC(i));
+      ASSERT_TRUE(NULL == manager.findMetaDataForPC(*i));
    }
 
 }
