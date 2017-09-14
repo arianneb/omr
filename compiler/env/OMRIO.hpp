@@ -109,3 +109,19 @@ class OMR_EXTENSIBLE IO
 }
 
 #endif
+
+// Setting macros for format specifiers
+#if (HOST_COMPILER ==  COMPILER_MSVC)
+   #ifdef TR_HOST_64BIT
+      #define SIZE_T_FORMAT_SPECIFIER "%lu"
+   #else
+      #define SIZE_T_FORMAT_SPECIFIER "%u"
+   #endif
+#else
+   #define SIZE_T_FORMAT_SPECIFIER = "%zu"
+#endif
+
+
+
+
+
