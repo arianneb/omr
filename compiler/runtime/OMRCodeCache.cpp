@@ -1273,18 +1273,18 @@ void
 OMR::CodeCache::printOccupancyStats()
    {
    fprintf(stderr, "Code Cache @%p flags=0x%x almostFull=%d\n", this, _flags, _almostFull);
-   fprintf(stderr, "   cold-warm hole size        = %8u bytes\n", self()->getFreeContiguousSpace());
+   fprintf(stderr, "   cold-warm hole size        = " SIZE_T_FORMAT_SPECIFIER " bytes\n", self()->getFreeContiguousSpace());
    fprintf(stderr, "   warmCodeAlloc=%p coldCodeAlloc=%p\n", (void*)_warmCodeAlloc, (void*)_coldCodeAlloc);
    if (_freeBlockList)
       {
-      fprintf(stderr, "   sizeOfLargestFreeColdBlock = %8d bytes\n", _sizeOfLargestFreeColdBlock);
-      fprintf(stderr, "   sizeOfLargestFreeWarmBlock = %8d bytes\n", _sizeOfLargestFreeWarmBlock);
+      fprintf(stderr, "   sizeOfLargestFreeColdBlock = " SIZE_T_FORMAT_SPECIFIER " bytes\n", _sizeOfLargestFreeColdBlock);
+      fprintf(stderr, "   sizeOfLargestFreeWarmBlock = " SIZE_T_FORMAT_SPECIFIER " bytes\n", _sizeOfLargestFreeWarmBlock);
       fprintf(stderr, "   reclaimed sizes:");
       // scope for critical section
          {
          CacheCriticalSection resolveAndCreateTrampoline(self());
          for (CodeCacheFreeCacheBlock *currLink = _freeBlockList; currLink; currLink = currLink->_next)
-            fprintf(stderr, " %u", currLink->_size);
+            fprintf(stderr," " SIZE_T_FORMAT_SPECIFIER " ", currLink->_size);
          }
       fprintf(stderr, "\n");
       }
@@ -1397,12 +1397,13 @@ OMR::CodeCache::checkForErrors()
             } // end for
          if (_sizeOfLargestFreeWarmBlock != maxFreeWarmSize)
             {
-            fprintf(stderr, "checkForErrors cache %p: Error: _sizeOfLargestFreeWarmBlock(%d) != maxFreeWarmSize(%d)\n", this, _sizeOfLargestFreeWarmBlock, maxFreeWarmSize);
+            fprintf(stderr, "checkForErrors cache %p: Error: _sizeOfLargestFreeWarmBlock(" SIZE_T_FORMAT_SPECIFIER ") != maxFreeWarmSize(" SIZE_T_FORMAT_SPECIFIER ")\n", this, _sizeOfLargestFreeWarmBlock, maxFreeWarmSize);
             doCrash = true;
             }
          if (_sizeOfLargestFreeColdBlock != maxFreeColdSize)
             {
-            fprintf(stderr, "checkForErrors cache %p: Error: _sizeOfLargestFreeColdBlock(%d) != maxFreeColdSize(%d)\n", this, _sizeOfLargestFreeColdBlock, maxFreeColdSize);
+            fprintf(stderr, "checkForErrors cache %p: Error: _sizeOfLargestFreeColdBlock(" SIZE_T_FORMAT_SPECIFIER ") != maxFreeColdSize(" SIZE_T_FORMAT_SPECIFIER ")\n", this, _sizeOfLargestFreeColdBlock, maxFreeColdSize);
+
             doCrash = true;
             }
 

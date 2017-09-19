@@ -118,7 +118,7 @@ class OMR_EXTENSIBLE IO
       #define SIZE_T_FORMAT_SPECIFIER "%u"
    #endif
 #else
-   #define SIZE_T_FORMAT_SPECIFIER = "%zu"
+   #define SIZE_T_FORMAT_SPECIFIER "%zu"
 #endif
 
 
